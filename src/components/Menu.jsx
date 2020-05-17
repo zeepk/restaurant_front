@@ -11,6 +11,9 @@ import CardContent from '@material-ui/core/CardContent';
 
 const MenuPage = styled.div``;
 
+const BASE_API_URL = 'https://rocky-cliffs-94215.herokuapp.com/';
+// const BASE_API_URL = 'localhost:8000/'
+
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
 
@@ -47,7 +50,7 @@ class Menu extends Component {
 	}
 
 	fetchServices() {
-		fetch('http://localhost:8000/api/menu-items.json')
+		fetch(`${BASE_API_URL}api/menu-items.json`)
 			.then((response) => {
 				return response.json();
 			})
@@ -56,7 +59,7 @@ class Menu extends Component {
 					items: myJson,
 				});
 			});
-		fetch('http://localhost:8000/api/menu-categories.json')
+		fetch(`${BASE_API_URL}api/menu-categories.json`)
 			.then((response) => {
 				return response.json();
 			})
