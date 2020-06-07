@@ -12,7 +12,7 @@ const H1 = styled.h1`
 export default function Home() {
 	return (
 		<HomePage>
-			<H1>Local Taqueria</H1>
+			<H1>Sozo Sushi</H1>
 		</HomePage>
 	);
 }
