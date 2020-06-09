@@ -4,6 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import RestImage from '../../images/rest_background.jpg';
+import SozoLogo from '../../images/sozo-logo.png';
 
 const Background = styled.div`
 	position: fixed;
@@ -17,49 +18,37 @@ const Background = styled.div`
 
 const LinkText = styled.div`
 	color: white;
-	padding: 0 20px 0 0;
+	padding: 0 20px 0 20px;
 	text-decoration: none;
-
+	font-size: 20px;
 	&:hover {
 		text-decoration: none;
+		color: silver;
 	}
 `;
 
-const Li = styled.li`
-	display: inline-block;
-	color: white;
-	padding: 20px 10px;
-	&:hover {
-		background-color: #5467d6;
-	}
+const LogoImg = styled.img`
+	padding: 5px 0;
+	height: 50px;
 `;
-const Ul = styled.ul`
-	margin: 0;
-	padding: 0;
-`;
+
 export default function Header() {
 	return (
 		<div>
 			<Background />
-			<AppBar position="static">
+			<AppBar position="static" style={{ backgroundColor: 'transparent' }}>
 				<Toolbar variant="dense">
-					<Ul>
-						<Li>
-							<Link to="/" style={{ textDecoration: 'none' }}>
-								<LinkText>Home</LinkText>
-							</Link>
-						</Li>
-						<Li>
-							<Link to="/menu" style={{ textDecoration: 'none' }}>
-								<LinkText>Menu</LinkText>
-							</Link>
-						</Li>
-						<Li>
-							<Link to="/contact" style={{ textDecoration: 'none' }}>
-								<LinkText>Contact</LinkText>
-							</Link>
-						</Li>
-					</Ul>
+					<Link to="/" style={{ textDecoration: 'none' }}>
+						<LogoImg src={SozoLogo} alt="" />
+					</Link>
+
+					<Link to="/menu" style={{ textDecoration: 'none' }}>
+						<LinkText>Menu</LinkText>
+					</Link>
+
+					<Link to="/contact" style={{ textDecoration: 'none' }}>
+						<LinkText>Contact</LinkText>
+					</Link>
 				</Toolbar>
 			</AppBar>
 		</div>
