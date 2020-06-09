@@ -8,6 +8,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const MenuPage = styled.div``;
 
@@ -41,6 +42,7 @@ class Menu extends Component {
 			categories: [],
 			items: [],
 			value: 0,
+			loading: true,
 		};
 		this.fetchServices = this.fetchServices.bind(this);
 	}
@@ -66,6 +68,7 @@ class Menu extends Component {
 			.then((myJson) => {
 				this.setState({
 					categories: myJson,
+					loading: false,
 				});
 			});
 	}
@@ -118,22 +121,36 @@ class Menu extends Component {
 
 		return (
 			<MenuPage>
-				<AppBar
-					position="static"
-					style={{
-						backgroundColor: '#f7d763',
-						color: 'black',
-						top: '15vh',
-						position: 'absolute',
-						width: '80%',
-						margin: '0 10%',
-					}}
-				>
-					<Tabs value={this.state.value} onChange={handleChange} centered>
-						{category_tabs}
-					</Tabs>
-				</AppBar>
-				{menu_panels}
+				{this.state.loading ? (
+					<CircularProgress
+						style={{
+							position: 'fixed',
+							left: '50vw',
+							top: '50vh',
+						}}
+						size={'100px'}
+						color="secondary"
+					/>
+				) : (
+					<div>
+						<AppBar
+							position="static"
+							style={{
+								backgroundColor: '#f7d763',
+								color: 'black',
+								top: '15vh',
+								position: 'absolute',
+								width: '80%',
+								margin: '0 10%',
+							}}
+						>
+							<Tabs value={this.state.value} onChange={handleChange} centered>
+								{category_tabs}
+							</Tabs>
+						</AppBar>
+						{menu_panels}
+					</div>
+				)}
 			</MenuPage>
 		);
 	}

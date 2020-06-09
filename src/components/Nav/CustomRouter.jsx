@@ -4,6 +4,8 @@ import Header from './Header';
 import Menu from '../Menu';
 import Home from '../Home';
 import Contact from '../Contact';
+const BASE_API_URL = 'https://rocky-cliffs-94215.herokuapp.com/';
+
 export default function CustomRouter() {
 	return (
 		<Router>
