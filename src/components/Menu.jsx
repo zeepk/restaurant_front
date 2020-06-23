@@ -1,22 +1,24 @@
-import React, { Component } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Grid from '@material-ui/core/Grid';
-import styled from 'styled-components';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import React, { Component } from 'react'
+import AppBar from '@material-ui/core/AppBar'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import Grid from '@material-ui/core/Grid'
+import styled from 'styled-components'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardMedia from '@material-ui/core/CardMedia'
+import CardContent from '@material-ui/core/CardContent'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
-const MenuPage = styled.div``;
+// TODO: grab from new CMS: https://z281ywf9.api.sanity.io/v1/data/query/production?query=*[_type == 'category']
 
-const BASE_API_URL = 'https://rocky-cliffs-94215.herokuapp.com/';
+const MenuPage = styled.div``
+
+const BASE_API_URL = 'https://rocky-cliffs-94215.herokuapp.com/'
 // const BASE_API_URL = 'localhost:8000/'
 
 function TabPanel(props) {
-	const { children, value, index, ...other } = props;
+	const { children, value, index, ...other } = props
 
 	return (
 		<div
@@ -32,45 +34,45 @@ function TabPanel(props) {
 				</div>
 			)}
 		</div>
-	);
+	)
 }
 
 class Menu extends Component {
 	constructor(props) {
-		super(props);
+		super(props)
 		this.state = {
 			categories: [],
 			items: [],
 			value: 0,
 			loading: true,
-		};
-		this.fetchServices = this.fetchServices.bind(this);
+		}
+		this.fetchServices = this.fetchServices.bind(this)
 	}
 
 	componentWillMount() {
-		this.fetchServices();
+		this.fetchServices()
 	}
 
 	fetchServices() {
 		fetch(`${BASE_API_URL}api/menu-items.json`)
 			.then((response) => {
-				return response.json();
+				return response.json()
 			})
 			.then((myJson) => {
 				this.setState({
 					items: myJson,
-				});
-			});
+				})
+			})
 		fetch(`${BASE_API_URL}api/menu-categories.json`)
 			.then((response) => {
-				return response.json();
+				return response.json()
 			})
 			.then((myJson) => {
 				this.setState({
 					categories: myJson,
 					loading: false,
-				});
-			});
+				})
+			})
 	}
 
 	render() {
@@ -83,7 +85,7 @@ class Menu extends Component {
 					<CardContent>${item.price}</CardContent>
 				</Card>
 			</Grid>
-		);
+		)
 
 		const item_grid = (category) => {
 			return (
@@ -99,25 +101,25 @@ class Menu extends Component {
 					}}
 				>
 					{this.state.items.map((item) => {
-						return item.category === category.id ? item_template(item) : null;
+						return item.category === category.id ? item_template(item) : null
 					})}
 				</Grid>
-			);
-		};
+			)
+		}
 
 		const category_tabs = this.state.categories.map((category) => (
 			<Tab label={category.title} style={{ float: 'middle' }} />
-		));
+		))
 		const menu_panels = this.state.categories.map((category) => (
 			<TabPanel index={category.id - 1} value={this.state.value}>
 				{item_grid(category)}
 			</TabPanel>
-		));
+		))
 		const handleChange = (event, newValue) => {
 			this.setState({
 				value: newValue,
-			});
-		};
+			})
+		}
 
 		return (
 			<MenuPage>
@@ -152,8 +154,8 @@ class Menu extends Component {
 					</div>
 				)}
 			</MenuPage>
-		);
+		)
 	}
 }
 
-export default Menu;
+export default Menu
