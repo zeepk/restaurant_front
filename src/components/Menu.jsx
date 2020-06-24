@@ -15,6 +15,9 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 const MenuPage = styled.div``
 
 const BASE_API_URL = 'https://rocky-cliffs-94215.herokuapp.com/'
+const BASE_SANITY_API_URL =
+	'https://z281ywf9.api.sanity.io/v1/data/query/production?query='
+const BASE_IMAGE_API_URL = 'https://cdn.sanity.io/images/z281ywf9/production/'
 // const BASE_API_URL = 'localhost:8000/'
 
 function TabPanel(props) {
@@ -43,6 +46,8 @@ class Menu extends Component {
 		this.state = {
 			categories: [],
 			items: [],
+			newcategories: [],
+			newitems: [],
 			value: 0,
 			loading: true,
 		}
@@ -54,38 +59,68 @@ class Menu extends Component {
 	}
 
 	fetchServices() {
-		fetch(`${BASE_API_URL}api/menu-items.json`)
+		// fetch(`${BASE_API_URL}api/menu-items.json`)
+		// 	.then((response) => {
+		// 		return response.json()
+		// 	})
+		// 	.then((myJson) => {
+		// 		this.setState({
+		// 			items: myJson,
+		// 		})
+		// 	})
+		// fetch(`${BASE_API_URL}api/menu-categories.json`)
+		// 	.then((response) => {
+		// 		return response.json()
+		// 	})
+		// 	.then((myJson) => {
+		// 		this.setState({
+		// 			categories: myJson,
+		// 			loading: false,
+		// 		})
+		// 	})
+		fetch(`${BASE_SANITY_API_URL}*[_type == 'category']`)
 			.then((response) => {
 				return response.json()
 			})
 			.then((myJson) => {
 				this.setState({
-					items: myJson,
+					categories: myJson.result,
+					loading: false,
 				})
 			})
-		fetch(`${BASE_API_URL}api/menu-categories.json`)
+		fetch(`${BASE_SANITY_API_URL}*[_type == 'product']`)
 			.then((response) => {
 				return response.json()
 			})
 			.then((myJson) => {
 				this.setState({
-					categories: myJson,
+					items: myJson.result,
 					loading: false,
 				})
 			})
 	}
 
 	render() {
-		const item_template = (item) => (
-			<Grid item xs={12} sm={6} md={3}>
-				<Card>
-					<CardHeader title={item.title} />
-					<CardMedia style={{ height: 250, top: 0 }} image={item.image} />
-					<CardContent>{item.details}</CardContent>
-					<CardContent>${item.price}</CardContent>
-				</Card>
-			</Grid>
-		)
+		const item_template = (item) => {
+			// caaa8ba418dc84f184c37cb1e8335d80c6ebbac7-330x220.jpg
+			// image-caaa8ba418dc84f184c37cb1e8335d80c6ebbac7-330x220-jpg
+			const image_url = item.image.asset._ref.substr(6).slice(0, -4)
+
+			console.log(image_url)
+			return (
+				<Grid item xs={12} sm={6} md={3}>
+					<Card>
+						<CardHeader title={item.title} />
+						<CardMedia
+							style={{ height: 250, top: 0 }}
+							image={`${BASE_IMAGE_API_URL + image_url}.jpg`}
+						/>
+						<CardContent>{item.description}</CardContent>
+						{/* <CardContent>${item.price}</CardContent> */}
+					</Card>
+				</Grid>
+			)
+		}
 
 		const item_grid = (category) => {
 			return (
@@ -101,7 +136,11 @@ class Menu extends Component {
 					}}
 				>
 					{this.state.items.map((item) => {
-						return item.category === category.id ? item_template(item) : null
+						// console.log(`${item.cateogry._ref === category._id}`)
+
+						return item.cateogry._ref === category._id
+							? item_template(item)
+							: null
 					})}
 				</Grid>
 			)
@@ -110,8 +149,8 @@ class Menu extends Component {
 		const category_tabs = this.state.categories.map((category) => (
 			<Tab label={category.title} style={{ float: 'middle' }} />
 		))
-		const menu_panels = this.state.categories.map((category) => (
-			<TabPanel index={category.id - 1} value={this.state.value}>
+		const menu_panels = this.state.categories.map((category, i) => (
+			<TabPanel index={i} value={this.state.value}>
 				{item_grid(category)}
 			</TabPanel>
 		))
