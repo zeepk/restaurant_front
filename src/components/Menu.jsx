@@ -10,15 +10,11 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-// TODO: grab from new CMS: https://z281ywf9.api.sanity.io/v1/data/query/production?query=*[_type == 'category']
-
 const MenuPage = styled.div``
 
-const BASE_API_URL = 'https://rocky-cliffs-94215.herokuapp.com/'
 const BASE_SANITY_API_URL =
 	'https://z281ywf9.api.sanity.io/v1/data/query/production?query='
 const BASE_IMAGE_API_URL = 'https://cdn.sanity.io/images/z281ywf9/production/'
-// const BASE_API_URL = 'localhost:8000/'
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props
@@ -59,25 +55,6 @@ class Menu extends Component {
 	}
 
 	fetchServices() {
-		// fetch(`${BASE_API_URL}api/menu-items.json`)
-		// 	.then((response) => {
-		// 		return response.json()
-		// 	})
-		// 	.then((myJson) => {
-		// 		this.setState({
-		// 			items: myJson,
-		// 		})
-		// 	})
-		// fetch(`${BASE_API_URL}api/menu-categories.json`)
-		// 	.then((response) => {
-		// 		return response.json()
-		// 	})
-		// 	.then((myJson) => {
-		// 		this.setState({
-		// 			categories: myJson,
-		// 			loading: false,
-		// 		})
-		// 	})
 		fetch(`${BASE_SANITY_API_URL}*[_type == 'category']`)
 			.then((response) => {
 				return response.json()
@@ -112,7 +89,7 @@ class Menu extends Component {
 					<Card>
 						<CardHeader title={item.title} />
 						<CardMedia
-							style={{ height: 250, top: 0 }}
+							style={{ height: 150, top: 0 }}
 							image={`${BASE_IMAGE_API_URL + image_url}.jpg`}
 						/>
 						<CardContent>{item.description}</CardContent>
@@ -136,9 +113,17 @@ class Menu extends Component {
 					}}
 				>
 					{this.state.items.map((item) => {
-						// console.log(`${item.cateogry._ref === category._id}`)
-
-						return item.cateogry._ref === category._id
+						return item.category?._ref === category._id
+							? item_template(item)
+							: null
+					})}
+					{this.state.items.map((item) => {
+						return item.category?._ref === category._id
+							? item_template(item)
+							: null
+					})}
+					{this.state.items.map((item) => {
+						return item.category?._ref === category._id
 							? item_template(item)
 							: null
 					})}
@@ -147,7 +132,10 @@ class Menu extends Component {
 		}
 
 		const category_tabs = this.state.categories.map((category) => (
-			<Tab label={category.title} style={{ float: 'middle' }} />
+			<Tab
+				label={category.title}
+				style={{ float: 'middle', fontWeight: 'bold' }}
+			/>
 		))
 		const menu_panels = this.state.categories.map((category, i) => (
 			<TabPanel index={i} value={this.state.value}>
