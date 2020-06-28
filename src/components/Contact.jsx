@@ -1,19 +1,19 @@
-import React from 'react';
-import GoogleMapReact from 'google-map-react';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import SozoInside from '../images/sozo-inside.jpg';
-import YelpLogo from '../images/yelp-logo.png';
+import React from 'react'
+import GoogleMapReact from 'google-map-react'
+import Grid from '@material-ui/core/Grid'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import Button from '@material-ui/core/Button'
+import SozoInside from '../images/sozo-inside.jpg'
+import YelpLogo from '../images/yelp-logo.png'
 
 const AnyReactComponent = ({ text }) => (
 	<div style={{ fontSize: '30px' }}>{text}</div>
-);
+)
 export default function Contact() {
-	const coords = [37.6765032783931, -121.8948289882431];
+	const coords = [37.6765032783931, -121.8948289882431]
 	return (
 		<Grid
 			container
@@ -23,16 +23,23 @@ export default function Contact() {
 			<Grid item style={{ margin: '10vh 0 0 0' }} xs={12} sm={4}>
 				<Card
 					style={{
-						backgroundColor: 'rgba(73, 73, 73, 0.90)',
+						backgroundColor: 'rgb(56, 72, 67, 0.8)',
 						color: 'white',
 						fontSize: '20px',
 					}}
 				>
-					<CardHeader title="Come on by!" />
 					<CardMedia style={{ height: 250, top: 0 }} image={SozoInside} />
-					<CardContent>📞 925-484-5588</CardContent>
+					<CardContent>
+						<span role="img" aria-label="phone">
+							📞
+						</span>
+						925-484-5588
+					</CardContent>
 					<CardContent>
 						<div>
+							<span role="img" aria-label="location">
+								🏠
+							</span>
 							2835 Hopyard Rd
 							<br />
 							Pleasanton, CA 94588
@@ -68,5 +75,5 @@ export default function Contact() {
 				</div>
 			</Grid>
 		</Grid>
-	);
+	)
 }

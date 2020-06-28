@@ -14,3 +14,6 @@ code {
 .MuiGrid-spacing-xs-3 {
 	width: 100% !important;
 }
+.MuiTabs-scroller {
+	overflow: auto !important;
+}

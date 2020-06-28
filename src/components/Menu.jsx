@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import AppBar from '@material-ui/core/AppBar'
+import TextField from '@material-ui/core/TextField'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Grid from '@material-ui/core/Grid'
@@ -83,10 +84,16 @@ class Menu extends Component {
 			// image-caaa8ba418dc84f184c37cb1e8335d80c6ebbac7-330x220-jpg
 			const image_url = item.image.asset._ref.substr(6).slice(0, -4)
 
-			console.log(image_url)
 			return (
 				<Grid item xs={12} sm={6} md={3}>
-					<Card>
+					<Card
+						style={{
+							backgroundColor: 'rgb(56, 72, 67, 0.8)',
+							color: 'white',
+							height: '350px',
+							overflow: 'auto',
+						}}
+					>
 						<CardHeader title={item.title} />
 						<CardMedia
 							style={{ height: 150, top: 0 }}
@@ -105,8 +112,8 @@ class Menu extends Component {
 					container
 					spacing={3}
 					style={{
-						top: '25vh',
-						position: 'absolute',
+						top: '10vh',
+						position: 'relative',
 						padding: '10px 2vw',
 						maxWidth: '100vw',
 						margin: 0,
@@ -147,9 +154,17 @@ class Menu extends Component {
 				value: newValue,
 			})
 		}
-
+		const vw = Math.max(
+			document.documentElement.clientWidth || 0,
+			window.innerWidth || 0
+		)
 		return (
 			<MenuPage>
+				{/* <form noValidate autoComplete="off">
+					<TextField id="standard-basic" label="Standard" />
+					<TextField id="filled-basic" label="Filled" variant="filled" />
+					<TextField id="outlined-basic" label="Outlined" variant="outlined" />
+				</form> */}
 				{this.state.loading ? (
 					<CircularProgress
 						style={{
@@ -163,17 +178,24 @@ class Menu extends Component {
 				) : (
 					<div>
 						<AppBar
-							position="static"
 							style={{
-								backgroundColor: '#f7d763',
+								backgroundColor: '#f0c39c',
 								color: 'black',
-								top: '15vh',
-								position: 'absolute',
+								top: '5vh',
+								position: 'relative',
 								width: '80%',
 								margin: '0 10%',
 							}}
 						>
-							<Tabs value={this.state.value} onChange={handleChange} centered>
+							<Tabs
+								orientation={vw < 550 ? 'vertical' : 'horizontal'}
+								value={this.state.value}
+								onChange={handleChange}
+								centered
+								style={{
+									maxHeight: '100px',
+								}}
+							>
 								{category_tabs}
 							</Tabs>
 						</AppBar>
