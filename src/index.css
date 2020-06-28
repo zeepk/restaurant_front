@@ -17,3 +17,11 @@ code {
 .MuiTabs-scroller {
 	overflow: auto !important;
 }
+.MuiInputBase-input,
+.MuiInput-input,
+.MuiFormLabel-root {
+	color: white !important;
+}
+.MuiOutlinedInput-notchedOutline {
+	border-color: white !important;
+}

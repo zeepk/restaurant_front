@@ -47,6 +47,7 @@ class Menu extends Component {
 			newitems: [],
 			value: 0,
 			loading: true,
+			inputValue: '',
 		}
 		this.fetchServices = this.fetchServices.bind(this)
 	}
@@ -120,19 +121,15 @@ class Menu extends Component {
 					}}
 				>
 					{this.state.items.map((item) => {
-						return item.category?._ref === category._id
-							? item_template(item)
-							: null
-					})}
-					{this.state.items.map((item) => {
-						return item.category?._ref === category._id
-							? item_template(item)
-							: null
-					})}
-					{this.state.items.map((item) => {
-						return item.category?._ref === category._id
-							? item_template(item)
-							: null
+						const displayItem =
+							item.category?._ref === category._id &&
+							(item.title
+								.toLowerCase()
+								.includes(this.state.inputValue.toLowerCase()) ||
+								item.description
+									.toLowerCase()
+									.includes(this.state.inputValue.toLowerCase()))
+						return displayItem ? item_template(item) : null
 					})}
 				</Grid>
 			)
@@ -160,11 +157,7 @@ class Menu extends Component {
 		)
 		return (
 			<MenuPage>
-				{/* <form noValidate autoComplete="off">
-					<TextField id="standard-basic" label="Standard" />
-					<TextField id="filled-basic" label="Filled" variant="filled" />
-					<TextField id="outlined-basic" label="Outlined" variant="outlined" />
-				</form> */}
+				<form noValidate autoComplete="off"></form>
 				{this.state.loading ? (
 					<CircularProgress
 						style={{
@@ -198,6 +191,32 @@ class Menu extends Component {
 							>
 								{category_tabs}
 							</Tabs>
+						</AppBar>
+						<AppBar
+							style={{
+								// color: 'black',
+								top: '6vh',
+								position: 'relative',
+								margin: '0 auto',
+								width: '40%',
+								background: 'rgba(0,0,0,0.5)',
+							}}
+						>
+							<TextField
+								id="standard-basic"
+								label="Search"
+								style={{
+									color: 'black !important',
+								}}
+								color="primary"
+								variant="outlined"
+								value={this.state.inputValue}
+								onChange={(e) => {
+									this.setState({
+										inputValue: e.target.value,
+									})
+								}}
+							/>
 						</AppBar>
 						{menu_panels}
 					</div>
