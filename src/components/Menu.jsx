@@ -89,7 +89,7 @@ class Menu extends Component {
 				<Grid item xs={12} sm={6} md={3}>
 					<Card
 						style={{
-							backgroundColor: 'rgb(56, 72, 67, 0.8)',
+							backgroundColor: 'rgb(56, 72, 67, 0)',
 							color: 'white',
 							height: '350px',
 							overflow: 'auto',
@@ -97,10 +97,12 @@ class Menu extends Component {
 					>
 						<CardHeader title={item.title} />
 						<CardMedia
-							style={{ height: 150, top: 0 }}
+							style={{ height: 150, top: 0, borderRadius: '2%' }}
 							image={`${BASE_IMAGE_API_URL + image_url}.jpg`}
 						/>
-						<CardContent>{item.description}</CardContent>
+						<CardContent style={{ fontSize: '20px' }}>
+							{item.description}
+						</CardContent>
 						{/* <CardContent>${item.price}</CardContent> */}
 					</Card>
 				</Grid>
@@ -118,6 +120,7 @@ class Menu extends Component {
 						padding: '10px 2vw',
 						maxWidth: '100vw',
 						margin: 0,
+						backgroundColor: '#00000087',
 					}}
 				>
 					{this.state.items.map((item) => {

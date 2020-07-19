@@ -23,7 +23,7 @@ export default function Contact() {
 			<Grid item style={{ margin: '10vh 0 0 0' }} xs={12} sm={4}>
 				<Card
 					style={{
-						backgroundColor: 'rgb(56, 72, 67, 0.8)',
+						backgroundColor: 'rgb(0, 0, 0, 0.8)',
 						color: 'white',
 						fontSize: '20px',
 					}}
